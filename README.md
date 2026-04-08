@@ -1,8 +1,10 @@
 # PocketLlama
 
-On-device LLM inference for Android using [llama.cpp](https://github.com/ggerganov/llama.cpp). Runs GGUF models locally with CPU, Vulkan, or OpenCL backends. Built for benchmarking inference performance across backends and quantizations on Snapdragon hardware.
+*On-device LLM inference for Android using [llama.cpp](https://github.com/ggerganov/llama.cpp). Runs GGUF models locally with CPU, Vulkan, or OpenCL backends. Built for benchmarking inference performance across backends and quantizations on Snapdragon hardware.*
 
-Group project — Mobile Application Software Development, Tsinghua University, Spring 2026.
+### Group project for Mobile Application Software Development, Tsinghua University, Spring 2026.
+
+While we have put a lot of work into it, this is still a demo and proof of concept project. Please be cautious using it in production scenarios. The authors do not take any responsibilities for any problems or issues caused by the app, however you are free to report issues or submit PRs on github.
 
 ---
 
@@ -80,12 +82,13 @@ adb pull /vendor/lib64/libOpenCL.so app/src/main/jniLibs/arm64-v8a/
 ## Running
 
 1. Build and install the APK on your device
-2. Launch PocketLlama
-3. Tap **Select GGUF File** and pick a `.gguf` model (or download one from HuggingFace)
-4. Configure GPU layers (0 = CPU only, max = all layers on GPU) and inference params
-5. Tap **Load Model**, then start chatting
+2. Download or copy a `.gguf` model onto your device, make sure that the size and quantization is suitable for your system specs, otherwise the app may crash due to running out of memory
+3. Launch PocketLlama, yo ucan attach a debugger or listen with adb logcat if required for debugging (see below)
+4. Tap **Select GGUF File** and pick a local `.gguf` model (or download one from HuggingFace)
+5. Configure inference parameters such as offloaded GPU layers (0 = CPU only, max = all layers on GPU).
+6. Tap **Load Model**, then start chatting
 
-Models are copied to app-internal storage on first load and reused on subsequent loads.
+For speed when changing configuration in the same run, models are copied to app-internal storage on first load and reused on subsequent loads.
 
 ### Recommended models
 
@@ -105,7 +108,7 @@ Qwen3-4B quants from [bartowski/Qwen_Qwen3-4B-GGUF](https://huggingface.co/barto
 | Max reply tokens | 1024 | Maximum generated tokens per response |
 | Batch size | 128 | Prompt processing batch size (n_ubatch) |
 
-Changing GPU layers while a model is loaded requires a reload (app will warn you).
+Changing GPU layers while a model is loaded requires a reload (you will be prompted to do so).
 
 ---
 
